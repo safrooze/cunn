@@ -29,7 +29,7 @@ __device__ __forceinline__ bool warpHasCollision(int val)
   #pragma unroll
   for (int i = 1; i <= 16; i++)
   {
-    dup |= (__shfl(val, (laneId + i) % 32) == val);
+    dup |= (WARP_SHFL(val, (laneId + i) % 32) == val);
   }
 
 #else
