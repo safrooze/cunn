@@ -46,7 +46,11 @@ __device__ __forceinline__ bool warpHasCollision(int val)
 
 #endif
 
-  return __any(dup) != 0;
+#if CUDA_VERSION >= 9000
+    return __any_sync(0xffffffff, dup) != 0;
+#else
+    return __any(dup) != 0;
+#endif
 }
 
 template <typename Dtype>
